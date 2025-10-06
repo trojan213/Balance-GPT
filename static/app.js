@@ -1,7 +1,6 @@
 let userToken = null;
-const backendUrl = "http://127.0.0.1:5000";
+const backendUrl = "https://balance-gpt-1.onrender.com";
 
-// ----------------- Login -----------------
 document.getElementById('loginBtn').addEventListener('click', async () => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -58,8 +57,6 @@ async function loadCompanies() {
         });
     });
 }
-
-// ----------------- Populate Years -----------------
 function populateYears() {
     const yearFrom = document.getElementById('yearFrom');
     const yearTo = document.getElementById('yearTo');
@@ -69,8 +66,6 @@ function populateYears() {
         yearTo.innerHTML += `<option value="${y}">${y}</option>`;
     }
 }
-
-// ----------------- Ask Question -----------------
 document.getElementById('askBtn').addEventListener('click', async () => {
     const company_id = document.getElementById('companySelectQuestion').value;
     const question = document.getElementById('questionInput').value;
@@ -87,7 +82,6 @@ document.getElementById('askBtn').addEventListener('click', async () => {
     document.getElementById('response').innerText = data.answer || data.error || '';
 });
 
-// ----------------- Upload PDF -----------------
 document.getElementById('uploadBtn').addEventListener('click', async () => {
     const fileInput = document.getElementById('pdfFile');
     if (!fileInput.files.length) return alert("Select a PDF first.");
@@ -104,8 +98,6 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     alert(data.success ? "PDF uploaded!" : "Error: " + (data.error || ""));
     await loadCompanies();
 });
-
-// ----------------- Plot -----------------
 document.getElementById('plotBtn').addEventListener('click', async () => {
     const companyId = document.getElementById('companySelectPlot').value;
     const res = await fetch(`${backendUrl}/plot/${companyId}`, {
@@ -114,8 +106,6 @@ document.getElementById('plotBtn').addEventListener('click', async () => {
     const data = await res.json();
     alert(data.success ? `Plot generated for ${data.company}` : "Error: " + (data.error || ""));
 });
-
-// ----------------- Filter / View Balance Sheets -----------------
 document.getElementById('viewBtn').addEventListener('click', async () => {
     const companyId = document.getElementById('companySelectFilter').value;
     const year_from = document.getElementById('yearFrom').value;
@@ -144,3 +134,4 @@ document.getElementById('viewBtn').addEventListener('click', async () => {
         tbody.innerHTML = `<tr><td colspan="5">No balance sheet data found for the selected range.</td></tr>`;
     }
 });
+
